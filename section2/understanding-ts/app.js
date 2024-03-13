@@ -2,11 +2,12 @@ function add(number1, number2, showResult, phrase) {
     // if (typeof number1 !== "number" || typeof number2 !== "number") {
     //   throw new Error("Incorrect input");
     // }
+    var result = number1 + number2;
     if (showResult) {
-        console.log(phrase + number1 + number2);
+        console.log(phrase + result);
     }
     else {
-        return number1 + number2;
+        return result;
     }
 }
 var number1 = 4;

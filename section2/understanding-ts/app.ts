@@ -3,10 +3,12 @@ function add(number1: number, number2: number, showResult: boolean, phrase: stri
   //   throw new Error("Incorrect input");
   // }
 
+  const result = number1 + number2;
+
   if (showResult) {
-    console.log(phrase + number1 + number2);
+    console.log(phrase + result);
   } else {
-    return number1 + number2;
+    return result;
   }
 }
 
