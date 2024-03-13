@@ -1,13 +1,18 @@
-function add(number1: number, number2: number) {
+function add(number1: number, number2: number, showResult: boolean, phrase: string) {
   // if (typeof number1 !== "number" || typeof number2 !== "number") {
   //   throw new Error("Incorrect input");
   // }
-  return number1 + number2;
+
+  if (showResult) {
+    console.log(phrase + number1 + number2);
+  } else {
+    return number1 + number2;
+  }
 }
 
 const number1 = 4;
 const number2 = 3.5;
+const printResult = true;
+const resultPhrase = "Result is: ";
 
-const result = add(number1, number2);
-
-console.log(result);
+add(number1, number2, printResult, resultPhrase);
