@@ -12,9 +12,13 @@ function add(number1: number, number2: number, showResult: boolean, phrase: stri
   }
 }
 
-const number1 = 4;
+// let number1: number = 4;
+let number1: number;
+
+number1 = 4;
+
 const number2 = 3.5;
 const printResult = true;
-const resultPhrase = "Result is: ";
+let resultPhrase = "Result is: ";
 
 add(number1, number2, printResult, resultPhrase);
