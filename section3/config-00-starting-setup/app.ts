@@ -1,3 +1,3 @@
-const username = "Son MinSeock!!";
+const username = "Son MinSeock";
 
 console.log(username);
