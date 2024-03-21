@@ -1,2 +1,5 @@
-console.log("Sending!!");
-// something...
+function sendAnalytics(data: string) {
+  return data;
+}
+
+sendAnalytics("The Data.");
