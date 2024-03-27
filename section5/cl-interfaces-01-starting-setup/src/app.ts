@@ -34,7 +34,7 @@ class AccountingDepartment extends Department {
     throw new Error("No Report Found");
   }
 
-  set mostRecentReport(value) {
+  set mostRecentReport(value: string) {
     if (!value) {
       throw new Error("Please pass in a valid value!");
     }
