@@ -1,18 +1,14 @@
-class Department {
+abstract class Department {
   // private id: string;
   // private name: string;
   static fiscalYear = 2024;
   protected employees: string[] = [];
-  constructor(private readonly id: string, public name: string) {}
+  constructor(protected readonly id: string, public name: string) {}
   static createEmployee(name: string) {
     return { name };
   }
-  describe(this: Department) {
-    console.log(`Department(${this.id}): ${this.name}`);
-    //this.fiscalYear; // X
-    //this.createEmployee(); // X
-    // Department.fiscalYear; // O
-  }
+  abstract describe(this: Department): void;
+
   addEmployee(employee: string) {
     // this.id = 'd11';
     this.employees.push(employee);
@@ -28,6 +24,9 @@ class ITDepartment extends Department {
   constructor(id: string, admins: string[]) {
     super(id, "IT");
     this.admins = admins;
+  }
+  describe() {
+    console.log(`IT Department - ID : ${this.id}`);
   }
 }
 
@@ -54,6 +53,13 @@ class AccountingDepartment extends Department {
     this.lastReport = reports[0];
   }
 
+  describe() {
+    console.log(`Accounting Department - ID : ${this.id}`);
+    //this.fiscalYear; // X
+    //this.createEmployee(); // X
+    // Department.fiscalYear; // O
+  }
+
   addEmployee(name: string): void {
     if (name === "Son") {
       return;
@@ -71,23 +77,19 @@ class AccountingDepartment extends Department {
 }
 
 const it = new ITDepartment("d1", ["Son"]);
-it.describe();
-
 it.addEmployee("Son");
 it.addEmployee("Max");
 
-it.printEmployeeInformation();
-
-console.log(it);
+it.describe();
 
 const accounting = new AccountingDepartment("d2", []);
+accounting.describe();
+// accounting.addReport("Something went wrong!");
+// console.log(accounting.mostRecentReport);
 
-accounting.addReport("Something went wrong!");
-console.log(accounting.mostRecentReport);
+// accounting.printReport();
+// accounting.mostRecentReport = "test";
+// accounting.printReport();
 
-accounting.printReport();
-accounting.mostRecentReport = "test";
-accounting.printReport();
-
-console.log(Department.createEmployee("Vincx"));
-console.log(Department.fiscalYear);
+// console.log(Department.createEmployee("Vincx"));
+// console.log(Department.fiscalYear);
