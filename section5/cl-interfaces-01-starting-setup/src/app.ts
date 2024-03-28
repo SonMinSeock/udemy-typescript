@@ -32,6 +32,7 @@ class ITDepartment extends Department {
 
 class AccountingDepartment extends Department {
   private lastReport: string;
+  private static instance: AccountingDepartment;
 
   get mostRecentReport() {
     if (this.lastReport) {
@@ -48,9 +49,25 @@ class AccountingDepartment extends Department {
     this.addReport(value);
   }
 
-  constructor(id: string, private reports: string[]) {
+  private constructor(id: string, private reports: string[]) {
     super(id, "Accounting");
     this.lastReport = reports[0];
+  }
+
+  static getInstance() {
+    /* 1. 첫 번째 방법.*/
+    /*
+    if (this.instance) {
+      return this.instance;
+    }
+    */
+    /* 2. 두 번째 방법.*/
+    if (AccountingDepartment.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountingDepartment("d2", []);
+
+    return this.instance;
   }
 
   describe() {
@@ -76,14 +93,21 @@ class AccountingDepartment extends Department {
   }
 }
 
-const it = new ITDepartment("d1", ["Son"]);
-it.addEmployee("Son");
-it.addEmployee("Max");
+const it1 = new ITDepartment("d1", ["Son"]);
+const it2 = new ITDepartment("d1", ["Son"]);
+console.log(it1 === it2);
 
-it.describe();
+// it.addEmployee("Son");
+// it.addEmployee("Max");
 
-const accounting = new AccountingDepartment("d2", []);
-accounting.describe();
+// it.describe();
+
+//const accounting = new AccountingDepartment("d2", []);
+const accounting1 = AccountingDepartment.getInstance();
+const accounting2 = AccountingDepartment.getInstance();
+
+console.log(accounting1 === accounting2);
+
 // accounting.addReport("Something went wrong!");
 // console.log(accounting.mostRecentReport);
 
