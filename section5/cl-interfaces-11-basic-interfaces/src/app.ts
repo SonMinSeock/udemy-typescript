@@ -1,7 +1,11 @@
 interface Greetable {
-  name: string;
+  readonly name: string;
   greet(phrase: string): void;
 }
+
+// type Another = {
+//   readonly name: string;
+// }
 
 class Person implements Greetable {
   name: string;
@@ -18,3 +22,4 @@ class Person implements Greetable {
 const user1: Greetable = new Person("Son MinSeock", 25);
 
 user1.greet("Hello");
+//user1.name = "Lane";
