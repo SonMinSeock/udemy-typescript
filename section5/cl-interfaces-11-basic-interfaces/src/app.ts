@@ -1,3 +1,19 @@
+// type AddFn = (n1: number, n2: number) => number
+
+// let add:AddFn;
+
+// add = (n1, n2) => {
+//   return n1 + n2;
+// }
+
+interface AddFn {
+  (n1: number, n2: number): number;
+}
+
+let add: AddFn = (n1, n2) => n1 + n2;
+
+console.log(add(10, 12));
+
 interface Named {
   readonly name: string;
 }
