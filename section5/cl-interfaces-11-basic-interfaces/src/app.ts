@@ -20,6 +20,7 @@ interface Named {
 
 interface Greetable extends Named {
   greet(phrase: string): void;
+  getAge?(): number;
 }
 
 // type Another = {
