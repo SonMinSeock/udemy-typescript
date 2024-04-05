@@ -21,23 +21,58 @@ type Numeric = number | boolean;
 
 type Universal = Combinable & Numeric;
 
-/*
-// 인터페이스 방식
-interface Admin {
-  name: string;
-  privileges: string[];
+type UnknownEmployee = Admin | Employee;
+
+function printEmployeeInformation(emp: UnknownEmployee) {
+  console.log("Name : ", emp.name);
+  if ("privileges" in emp) {
+    console.log("Privileges : ", emp.privileges);
+  }
+  if ("startDate" in emp) {
+    console.log("Start Date : ", emp.startDate);
+  }
 }
 
-interface Employee {
-  name: string;
-  startDate: Date;
+printEmployeeInformation(e1);
+
+class Car {
+  drive() {
+    console.log("Drivng a car...");
+  }
 }
 
-interface ElevatedEmployee extends Admin, Employee {}
+interface Truck {
+  drive: () => void;
+  loadCargo: (amount: number) => void;
+}
 
-const e1: ElevatedEmployee = {
-  name: "손민석",
-  privileges: ["create-server"],
-  startDate: new Date(),
+// class Truck {
+//   drive() {
+//     console.log("Drivng a truck...");
+//   }
+//   loadCargo(amount: number) {
+//     console.log("Loading cargo... " + amount);
+//   }
+// }
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2: Truck = {
+  drive() {
+    console.log("Drivng a truck...");
+  },
+  loadCargo(amount) {
+    console.log("Loading cargo... " + amount);
+  },
 };
-*/
+
+function useVehicle(vehicle: Vehicle) {
+  vehicle.drive();
+  if ("loadCargo" in vehicle) {
+    vehicle.loadCargo(10000);
+  }
+}
+
+useVehicle(v1);
+useVehicle(v2);
