@@ -26,3 +26,10 @@ function moveAnimal(animal: Animal) {
 
 moveAnimal({ type: "bird", flyingSpeed: 10 });
 moveAnimal({ type: "horse", runningSpeed: 100 });
+
+//const userNameInput = <HTMLInputElement>document.getElementById("username")!;
+const userNameInput = document.getElementById("username");
+
+if (userNameInput) {
+  (userNameInput as HTMLInputElement).value = "Son";
+}
