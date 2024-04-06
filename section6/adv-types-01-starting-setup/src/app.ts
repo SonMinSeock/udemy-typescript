@@ -58,3 +58,14 @@ function add(a: Combinable, b: Combinable) {
 
 const result1 = add(1, 3);
 const result2 = add("Hello ", "Son");
+
+const fetchedUserData = {
+  id: "u1",
+  name: "Son",
+  job: {
+    title: "CEO",
+    descritpion: "Hi CEO",
+  },
+};
+
+console.log(fetchedUserData?.job?.descritpion);
