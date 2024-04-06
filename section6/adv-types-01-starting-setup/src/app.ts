@@ -69,3 +69,8 @@ const fetchedUserData = {
 };
 
 console.log(fetchedUserData?.job?.descritpion);
+
+const userInput = null;
+const storedData = userInput ?? "DEFAULT";
+
+console.log(storedData);
