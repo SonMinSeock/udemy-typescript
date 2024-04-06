@@ -33,3 +33,13 @@ const userNameInput = document.getElementById("username");
 if (userNameInput) {
   (userNameInput as HTMLInputElement).value = "Son";
 }
+
+interface ErrorContainer {
+  // { email: "Not a valid email", username: "Must...." }
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: "Not a valid email!",
+  username: "Must start with a capital character!",
+};
