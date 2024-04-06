@@ -43,3 +43,16 @@ const errorBag: ErrorContainer = {
   email: "Not a valid email!",
   username: "Must start with a capital character!",
 };
+
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+function add(a: Combinable, b: Combinable) {
+  if (typeof a === "string" || typeof b === "string") {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+
+const result1 = add(1, 3);
+const result2 = add("Hello ", "Son");
