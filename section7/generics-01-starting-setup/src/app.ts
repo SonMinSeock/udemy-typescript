@@ -1,32 +1,38 @@
-function merge<T extends object, U extends object>(objA: T, objB: U) {
-  return Object.assign(objA, objB);
-}
-const mergeObj1 = merge({ name: "손민석", hobbies: ["스케이트보드 타기", "락밴드 음악 듣기"] }, { age: 25 });
-const mergeObj2 = merge({ name: "전민서" }, { age: 22 });
-console.log(mergeObj1.name, mergeObj1.age, mergeObj1.hobbies);
-console.log(mergeObj2.name, mergeObj2.age);
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
 
-interface Lengthy {
-  length: number;
-}
-
-function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
-  let descriptionText = "Got no value.";
-
-  if (element.length === 1) {
-    descriptionText = "Got 1 element.";
-  } else if (element.length > 1) {
-    descriptionText = `Got ${element.length} elements.`;
+  addItem(item: T) {
+    this.data.push(item);
   }
-  return [element, descriptionText];
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data];
+  }
 }
 
-console.log(countAndDescribe("Hi there!"));
-console.log(countAndDescribe(["Son", "Kim"]));
-console.log(countAndDescribe(""));
+const textStorage = new DataStorage<string>();
+textStorage.addItem("안녕하세요");
+console.log(textStorage.getItems());
 
-function extractAndConvert<T extends {}, U extends keyof T>(obj: T, key: U) {
-  return `Value ${obj[key]}`;
-}
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(10);
+numberStorage.addItem(23);
+numberStorage.addItem(20);
+numberStorage.removeItem(23);
+console.log(numberStorage.getItems());
 
-console.log(extractAndConvert({ name: "손민석", age: 25 }, "name"));
+// const objectStorage = new DataStorage<object>();
+// const user1 = { name: "Son" };
+// const user2 = { name: "Kim" };
+
+// objectStorage.addItem(user1);
+// objectStorage.addItem(user2);
+// objectStorage.removeItem(user1);
+// console.log(objectStorage.getItems());
