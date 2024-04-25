@@ -1,32 +1,27 @@
-function Logger(logStr: string) {
-  console.log("Logger 팩토리 실행...");
-  return function (constructor: Function) {
-    console.log("Logger 데코레이터 실행...");
-    console.log(logStr);
-    console.log(constructor);
-  };
+function Log(target: any, propertyName: string | Symbol) {
+  console.log("프로퍼티 데코레이터!");
+  console.log(target, propertyName);
 }
 
-function WithTemplate(template: string, hookId: string) {
-  console.log("WithTemplate 팩토리 실행...");
-  return function (constructor: any) {
-    console.log("WithTemplate 데코레이터 실행...");
-    const hookEl = document.getElementById(hookId);
-    const user = new constructor();
+class Product {
+  @Log
+  title: string;
+  private _price: number;
 
-    if (hookEl) {
-      hookEl.innerHTML = template;
-      hookEl.querySelector("h1")!.textContent = user.name;
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    } else {
+      throw new Error("Invalid price - should be positive!");
     }
-  };
-}
+  }
 
-@Logger("LOGGING")
-@WithTemplate("<h1>My Person Object</h1>", "app")
-class Person {
-  name = "Son";
-  constructor() {
-    console.log("Creating Person...");
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithTax(tax: number) {
+    return this._price * (1 + tax);
   }
 }
-const user = new Person();
