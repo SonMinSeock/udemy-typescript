@@ -18,6 +18,21 @@ class ProjectInput {
 */
 
 // 강의에서 작성한 코드이다.
+
+function AutoBind(_1: any, _2: string | Symbol, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const bindFn = originalMethod.bind(this);
+      return bindFn;
+    },
+  };
+
+  return adjDescriptor;
+}
+
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -40,13 +55,14 @@ class ProjectInput {
     this.attach();
   }
 
+  @AutoBind
   private submitHandler(event: Event) {
     event.preventDefault();
     console.log(this.titleInputElement.value, this.descriptionInputElement.value, this.peopleInputElement.value);
   }
 
   private configure() {
-    this.element.addEventListener("submit", this.submitHandler.bind(this));
+    this.element.addEventListener("submit", this.submitHandler);
   }
 
   private attach() {
