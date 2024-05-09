@@ -19,6 +19,44 @@ class ProjectInput {
 
 // 강의에서 작성한 코드이다.
 
+// Validation 인터페이스.
+interface Validatable {
+  value: string | number;
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
+}
+
+// 입력에 대한 검증 함수.
+function validate(validatable: Validatable) {
+  let isValid = true;
+
+  if (validatable.required) {
+    isValid = isValid && validatable.value.toString().trim().length !== 0;
+  }
+
+  if (validatable.minLength !== undefined && typeof validatable.value === "string") {
+    isValid = isValid && validatable.value.length >= validatable.minLength;
+  }
+
+  if (validatable.maxLength !== undefined && typeof validatable.value === "string") {
+    isValid = isValid && validatable.value.length <= validatable.maxLength;
+  }
+
+  if (validatable.min !== undefined && typeof validatable.value === "number") {
+    isValid = isValid && validatable.value >= validatable.min;
+  }
+
+  if (validatable.max !== undefined && typeof validatable.value === "number") {
+    isValid = isValid && validatable.value <= validatable.max;
+  }
+
+  return isValid;
+}
+
+// AutoBind 데코레이터.
 function AutoBind(_1: any, _2: string | Symbol, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
   const adjDescriptor: PropertyDescriptor = {
@@ -66,11 +104,25 @@ class ProjectInput {
     const enteredDescription = this.descriptionInputElement.value;
     const enteredPeople = this.peopleInputElement.value;
 
-    if (
-      enteredTitle.trim().length === 0 ||
-      enteredDescription.trim().length === 0 ||
-      enteredPeople.trim().length === 0
-    ) {
+    const titleValidatable: Validatable = {
+      value: enteredTitle,
+      required: true,
+    };
+
+    const descriptionValidatable: Validatable = {
+      value: enteredDescription,
+      required: true,
+      minLength: 5,
+    };
+
+    const peopleValidatable: Validatable = {
+      value: +enteredPeople,
+      required: true,
+      min: 1,
+      max: 5,
+    };
+
+    if (!validate(titleValidatable) || !validate(descriptionValidatable) || !validate(peopleValidatable)) {
       alert("Invalid input, please try again!");
       return;
     } else {
