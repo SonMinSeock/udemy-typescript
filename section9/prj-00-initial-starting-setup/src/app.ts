@@ -19,11 +19,31 @@ class ProjectInput {
 
 // 강의에서 작성한 코드이다.
 
+// enum 타입 정의.
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+// Listener 타입 정의.
+type Listener = (items: Project[]) => void;
+
+// Project 타입 정의.
+class Project {
+  constructor(
+    public id: string,
+    public title: string,
+    public description: string,
+    public people: number,
+    public status: ProjectStatus.Active | ProjectStatus.Finished
+  ) {}
+}
+
 // Project 상태 관리해주는 클래스.
 class ProjectState {
   // 필드 정의.
-  private listeners: any[] = [];
-  private projects: any[] = [];
+  private listeners: Listener[] = [];
+  private projects: Project[] = [];
   //싱글톤 패턴 적용.
   private static instance: ProjectState;
   private constructor() {}
@@ -36,17 +56,12 @@ class ProjectState {
   }
 
   // 메서드 정의.
-  addListener(listenerFn: Function) {
+  addListener(listenerFn: Listener) {
     this.listeners.push(listenerFn);
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
-      title,
-      description,
-      people: numOfPeople,
-    };
+    const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
     this.projects.push(newProject);
 
     for (const listenerFn of this.listeners) {
@@ -113,7 +128,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[] = [];
+  assignedProjects: Project[] = [];
 
   constructor(private type: "active" | "finished") {
     this.templateElement = document.getElementById("project-list")! as HTMLTemplateElement;
@@ -122,7 +137,7 @@ class ProjectList {
     this.element = importedNode.firstElementChild as HTMLElement;
     this.element.id = `${this.type}-projects`;
 
-    projectState.addListener((projects: any[]) => {
+    projectState.addListener((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
