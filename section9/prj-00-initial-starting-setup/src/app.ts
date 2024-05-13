@@ -19,6 +19,18 @@ class ProjectInput {
 
 // 강의에서 작성한 코드이다.
 
+// Drag & Drop 인터페이스.
+interface Draggable {
+  dragStartHandler(event: DragEvent): void;
+  dragEndHandler(event: DragEvent): void;
+}
+
+interface DragTarget {
+  dragOverHandler(event: DragEvent): void;
+  dropHandler(event: DragEvent): void;
+  dragLeaveHandler(event: DragEvent): void;
+}
+
 // enum 타입 정의.
 enum ProjectStatus {
   Active,
@@ -154,7 +166,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   abstract renderContent(): void;
 }
 
-class ProjectItem extends Component<HTMLUListElement, HTMLElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLElement> implements Draggable {
   private project: Project;
 
   get persons() {
@@ -169,9 +181,24 @@ class ProjectItem extends Component<HTMLUListElement, HTMLElement> {
     super("single-project", hostId, false, project.id);
     this.project = project;
 
+    this.configure();
     this.renderContent();
   }
-  configure() {}
+
+  @AutoBind
+  dragStartHandler(event: DragEvent) {
+    console.log(event);
+  }
+
+  dragEndHandler(_: DragEvent) {
+    console.log("Drag End");
+  }
+
+  configure() {
+    this.element.addEventListener("dragstart", this.dragStartHandler);
+    this.element.addEventListener("dragend", this.dragEndHandler);
+  }
+
   renderContent() {
     this.element.querySelector("h2")!.textContent = this.project.title;
     this.element.querySelector("h3")!.textContent = this.persons + " assigned";
