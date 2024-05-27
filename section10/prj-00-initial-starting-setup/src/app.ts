@@ -1,6 +1,3 @@
-/// <reference path="components/project-input.ts" />
-/// <reference path="components/project-list.ts" />
-
 // 내가 작성한 코드.
 /*
 class ProjectInput {
@@ -21,8 +18,9 @@ class ProjectInput {
 */
 
 // 강의에서 작성한 코드이다.
-namespace App {
-  new ProjectInput();
-  new ProjectList("active");
-  new ProjectList("finished");
-}
+import { ProjectInput } from "./components/project-input.js";
+import { ProjectList } from "./components/project-list.js";
+
+new ProjectInput();
+new ProjectList("active");
+new ProjectList("finished");
