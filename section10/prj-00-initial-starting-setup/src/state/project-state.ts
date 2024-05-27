@@ -51,3 +51,5 @@ export class ProjectState extends State<Project> {
 }
 
 export const projectState = ProjectState.getInstance();
+
+console.log("project-state 파일 실행");
