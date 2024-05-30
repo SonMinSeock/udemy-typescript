@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoList from "./components/TodoList";
 import NewTodo from "./components/NewTodo";
-
-interface ITodo {
-  id: string;
-  text: string;
-}
+import { ITodo } from "./types/todo.model";
 
 const App: React.FC = () => {
-  const todos: ITodo[] = [{ id: "t1", text: "타입스크립트 공부" }];
+  const [todos, setTodos] = useState<ITodo[]>([]);
+
   const todoAddHandler = (text: string) => {
-    console.log(text);
+    const todo = { id: Math.random().toString(), text };
+    setTodos((prev) => [todo, ...prev]);
   };
   return (
     <div className="App">
